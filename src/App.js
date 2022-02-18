@@ -1,23 +1,39 @@
-import logo from './logo.svg';
+import { useEffect, useState } from 'react';
+import { useLogin } from './api/componentes/api/loginApi';
 import './App.css';
 
 function App() {
+  const [username, setUsername] = useState();
+  const [password, setPassword] = useState();
+
+  const [{data, loading, error}, execute] = useLogin()
+
+  function logar(e){
+    e.preventDefault();
+    const usuario = {
+      username, password
+    }
+
+    execute({data: usuario })
+
+  }
+  useEffect( () => {
+    console.log(data)
+  },[data]) 
+
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <form onSubmit={logar}>
+        username: <input type="text" id="username" name='username' onChange={(e) => { setUsername(e.target.value) }} />
+        <br/>
+        <br/>
+       password:  < input type="password" name='password' id='password' onChange={(e) => { setPassword(e.target.value) }} />
+        <br/>
+        <input type='submit' value="ok"/>
+
+      </form>
+     
     </div>
   );
 }
