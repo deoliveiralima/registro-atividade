@@ -1,38 +1,50 @@
 import { useEffect, useState } from 'react';
-import { useLogin } from './api/componentes/api/loginApi';
+import { useLogin } from './componentes/api/loginApi';
+
 import './App.css';
 
+
+import { BrowserRouter, Route, Router, Routes } from 'react-router-dom';
+
+import LoginPage from './paginas/login/pagina';
+import 'bootstrap/dist/css/bootstrap.css';
+import Inicio from './paginas/inicio';
+import RotasPrivadas from './componentes/RotasPrivadas';
+import PaginaSalvaCategoriaAtividade from './paginas/categoria-atividade/PaginaCadastro';
+import PaginaCategoriaAtividade from './paginas/categoria-atividade/PaginaCategoriaAtividade';
+import PaginaListaCategoriaAtividade from './paginas/categoria-atividade/PaginaLista';
+import PaginaObtemCategoriaAtividade from './paginas/categoria-atividade/PaginaObtemCategoriaAtividade';
+
 function App() {
-  const [username, setUsername] = useState();
-  const [password, setPassword] = useState();
+  const token = sessionStorage.getItem('token')
+  const [logado, setLoagado] = useState()
+  
 
-  const [{data, loading, error}, execute] = useLogin()
-
-  function logar(e){
-    e.preventDefault();
-    const usuario = {
-      username, password
-    }
-
-    execute({data: usuario })
-
-  }
-  useEffect( () => {
-    console.log(data)
-  },[data]) 
+  console.log(token)
 
 
   return (
     <div className="App">
-      <form onSubmit={logar}>
-        username: <input type="text" id="username" name='username' onChange={(e) => { setUsername(e.target.value) }} />
-        <br/>
-        <br/>
-       password:  < input type="password" name='password' id='password' onChange={(e) => { setPassword(e.target.value) }} />
-        <br/>
-        <input type='submit' value="ok"/>
+      <BrowserRouter>
+ 
+        <Routes>
+          <Route element={<RotasPrivadas token = {token} />}>
+            <Route path="/" element={<Inicio/>}/>
+            <Route path="categoria-atividade" element={<PaginaCategoriaAtividade />}>
+              <Route path="salva" element={<PaginaSalvaCategoriaAtividade/>}/>
+              <Route path="lista" element={<PaginaListaCategoriaAtividade/>}/>
+              <Route path=":categoriaAtividadeId" element={<PaginaObtemCategoriaAtividade/>}/>
+            </Route>
+            
+          </Route>
+          <Route  path='/login' element={<LoginPage />}/>
+          
+          
+ 
+        </Routes>
 
-      </form>
+      </BrowserRouter>
+      
      
     </div>
   );
