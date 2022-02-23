@@ -7,6 +7,20 @@ import {createStore} from 'redux'
 import {Provider} from 'react-redux'
 import appReducer from './reducers/reducers';
 
+import axios from 'axios';
+let token ='token'
+  sessionStorage.getItem('token') ? token = sessionStorage.getItem('token') : 
+  
+
+axios.create({
+  baseURL: "http://localhost:8080/",
+  headers: {
+    "Content-type": "application/json",
+    "Authorization" : `Bearer ${token}`
+  }
+});
+console.log(token)
+
 const store = createStore(appReducer)
 
 

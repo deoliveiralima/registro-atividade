@@ -6,27 +6,32 @@ export default function LoginForm(){
 
     const [username, setUsername] = useState();
     const [password, setPassword] = useState();
-    const [ { data: loginData, loading: lading, error: error }, execute ] = useLogin()
+    //const [ { data: loginData, loading: lading, error: error }, execute ] = useLogin()
+    const {login, response} = useLogin()
     const navigate = useNavigate()
 
-
     useEffect(() => {
-        
-        if(loginData){
-            console.log("esta em login")
-            console.log(loginData)
-            sessionStorage.setItem('token', loginData.token)
-            navigate("/")
+        if(response.data){
+            sessionStorage.setItem('token', response.data.token)
+            console.log(response.data)
+            navigate('/')
         }
-             
-        
-        
-    }, [loginData])
+         
+            
+
+    },[response])
+
+
+
 
     function loginSubmit(e){
         e.preventDefault();
+        const data = {username: username, password: password}
+
+        login(data)
+        
        
-        execute({data: { username, password } })
+       
 
         
     }

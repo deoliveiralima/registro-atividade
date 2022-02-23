@@ -3,10 +3,6 @@ import Axios  from "axios";
 import useAxios, { configure } from "axios-hooks";
 import React from "react";
 
-const axios = Axios.create({
-    baseURL: 'http://localhost:8080'
-})
-configure({axios})
 const token = sessionStorage.getItem('token')
 
 export function useSalvaCategoriaAtividade(data){

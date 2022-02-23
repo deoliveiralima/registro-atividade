@@ -1,17 +1,25 @@
-import React from "react";
-import useAxios,{configure} from "axios-hooks";
-import Axios from 'axios'
+import { useState } from "react";
+import axios from 'axios'
 
-const axios = Axios.create({
-    baseURL: 'http://localhost:8080/'
-})
-configure({axios})
-export function useLogin(data){
-    return useAxios(
-        {
-            url: "/auth",
-            data : data,
-            method: 'POST'
-        }, {manual: true}
-    )
+export function useLogin(){
+    const [response, setResponse] = useState({})
+
+    const  login = (data) => {
+    
+    axios({
+            method: 'POST',
+            url: '/auth',
+            data: data
+        
+            })
+            .then(function (response) {
+                setResponse(response)
+               
+            }).catch(function (error){
+                
+            })}
+        
+   return {login, response}
 }
+
+        

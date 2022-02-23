@@ -18,7 +18,7 @@ export default function TabelaCategoriaAtividade({categoriaAtividade}){
                         </tr>
                     </thead>
                     <tbody> 
-                        { categoriaAtividade && categoriaAtividade.map( (categoriaAtividade,i) => (
+                        { categoriaAtividade && categoriaAtividade.map( (categoriaAtividade, i) => (
                             <React.Fragment key={i}>
                                 <LinhasTabelaCategoriaAtividade {...categoriaAtividade} />
                             </React.Fragment> 

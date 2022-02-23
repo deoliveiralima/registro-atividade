@@ -1,23 +1,25 @@
 import { useEffect, useState } from "react";
-import { useListaCategoriaAtividade } from "../../componentes/api";
+import useCategoriaAtividadeApi from "../../componentes/api/useCategoriaAtividadeApi";
+
 import TabelaCategoriaAtividade from "../../componentes/CategoriaAtividade/ListaCategoriaAtividade";
 
 
 export default function PaginaListaCategoriaAtividade({}){
-    const [ { data: data, loading: lading, error: error, response: response }, execute ] = useListaCategoriaAtividade()
+    
 
     const[categoriaAtividade, setCategoriaAtividade] = useState()
+    const {listar, response, error} = useCategoriaAtividadeApi()
 
     useEffect(()=>{
-        execute()
+        listar()
     },[])
 
     useEffect(()=>{
-        if(data)
-            setCategoriaAtividade(data)
-            console.log(data)
+        if(response.data)
+            setCategoriaAtividade(response.data)
+            
 
-    },[data])
+    },[response.data])
 
 
     return(

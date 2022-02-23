@@ -2,23 +2,26 @@ import { useEffect, useState } from "react"
 import { useDispatch } from "react-redux"
 import { useNavigate } from "react-router-dom"
 import { definirAlert } from "../../actions/actions"
-import { useSalvaCategoriaAtividade } from "../api"
+import useCategoriaAtividadeApi from "../api/useCategoriaAtividadeApi"
 
 export default function FormCategoriaAtividade(){
 
     const [alertClass, setAlertClass] = useState()
     const [alertTexto, setAlertTexto] = useState()
 
-    const dispatch = useDispatch()
-
     const [nome, setNome] = useState('')
 
-    const [ { data: data, loading: lading, error: error, response: response }, execute ] = useSalvaCategoriaAtividade()
+    const {listar, salvar, error, response } = useCategoriaAtividadeApi()
 
+    const dispatch = useDispatch()
+    
     const navigate = useNavigate()
 
+
+
     useEffect(() => {
-        if(data){
+        
+        if(response.data){
             dispatch(definirAlert({classe: "alert alert-success", texto: "Categoria de Atividade Salva"}))
             setNome('')
 
@@ -29,12 +32,12 @@ export default function FormCategoriaAtividade(){
 
         }
         
-    }, [data])
+    }, [response.data])
 
     useEffect(() => {
-        if(error){
-            setAlertClass('alert alert-danger')
-            setAlertTexto('Problema ao salvar o item')
+        if(error.response){
+            dispatch(definirAlert({classe: "alert alert-danger", texto: "Problema ao salvar o item"}))
+           
         }
         
     }, [error])
@@ -43,7 +46,7 @@ export default function FormCategoriaAtividade(){
     function categoriaAtividadeSubmit(e){
         e.preventDefault()
 
-        execute({data: { nome } })
+        salvar({nome: nome})
         
     }
 

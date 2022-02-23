@@ -2,6 +2,7 @@ import CardAtividade from "./CardAtividades";
 
 
 export default function ObtemCategoriaAtividade({categoriaAtividade}){
+    console.log(categoriaAtividade)
     return(
         <>
         <div className="row">
