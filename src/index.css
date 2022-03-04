@@ -5,6 +5,8 @@ body {
     sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
+  
+
 }
 
 code {
@@ -24,4 +26,15 @@ code {
 
 .button-form{
   width: 100%;
+}
+
+.form-cadastro{
+  text-align: left;
+}
+
+.card-atividade{
+  width: 18rem;
+}
+.lista-atividade{
+  width: 50%;
 }

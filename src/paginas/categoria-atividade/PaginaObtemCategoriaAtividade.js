@@ -6,26 +6,38 @@ import ObtemCategoriaAtividade from "../../componentes/CategoriaAtividade/ObtemC
 
 
 export default function  PaginaObtemCategoriaAtividade ({}){
-    const {categoriaAtividadeId} = useParams();
+    const {id} = useParams();
 
     const {response, error, obter} = useCategoriaAtividadeApi()
 
     const [categoriaAtividade, setCategoriaAtividade] = useState()
+    console.log("pagina categoria atividade")
 
     useEffect(()=>{
-        obter(categoriaAtividadeId)
+        obter(id)
     },[])
 
     useEffect(()=>{
         if(response.data){
-  
+            
         }
     },[response.data])
    
 
     return(
         <div className="container">  
-        {response.data && <ObtemCategoriaAtividade categoriaAtividade={response.data} /> }
+        <div className="row">
+            <div className="col">
+                <h1> {response.data && response.data.nome  } </h1>
+            </div>
+        </div>
+
+        <div className="row">
+            <div className="col">
+            {response.data && <ObtemCategoriaAtividade categoriaAtividade={response.data} /> }
+            </div>
+        </div>
+
 
         </div>
     )

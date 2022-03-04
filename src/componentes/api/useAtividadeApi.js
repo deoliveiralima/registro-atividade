@@ -1,5 +1,5 @@
-import React,{ useState } from "react";
-import axios from "axios";
+import { useState } from "react"
+import axios from "axios"
 
 const token = sessionStorage.getItem('token')
 
@@ -9,7 +9,8 @@ const headers = {
     
 }
 
-export default function useCategoriaAtividadeApi(){
+export default function useAtividadeApi(){
+
     const [error, setError] = useState({})
 
     const [response, setResponse] = useState({})
@@ -17,7 +18,7 @@ export default function useCategoriaAtividadeApi(){
     const salvar = (data) => {
         axios({
             method: 'POST',
-            url: '/categoria-atividade',
+            url: '/atividade',
             data: data,
             headers: headers
             
@@ -31,10 +32,10 @@ export default function useCategoriaAtividadeApi(){
             })
     }
 
-    const listar = () => {
+    const listar = (direcao = 'ASC') => {
         axios({
-            method: 'GET',
-            url: '/categoria-atividade',
+            method: 'GET', 
+            url: `/atividade/listar/${direcao}`,
             headers: headers
         
             })
@@ -46,11 +47,12 @@ export default function useCategoriaAtividadeApi(){
                 setError(error)
             })
     }
+    
 
     const atualizar = (data, id) => {
         axios({
             method: 'PUT',
-            url: `/categoria-atividade/${id}`,
+            url: `/atividade/${id}`,
             data: data,
             headers: headers
             
@@ -65,16 +67,15 @@ export default function useCategoriaAtividadeApi(){
     }
 
     const obter = (id) => {
-        
+
         axios({
             method: 'GET',
-            url: `/categoria-atividade/${id}`,
+            url: `/atividade/${id}`,
             headers: headers
         
             })
             .then(function (response) {
                 setResponse(response)
-                
                 
             })
             .catch(function (error){
@@ -84,7 +85,42 @@ export default function useCategoriaAtividadeApi(){
     const excluir = (id) => {
         axios({
             method: 'DELETE',
-            url: `/categoria-atividade/${id}`,
+            url: `/atividade/${id}`,
+            headers: headers
+        
+            })
+            .then(function (response) {
+                setResponse(response)
+                
+            })
+            .catch(function (error){
+                setError(error)
+            })
+    }
+
+    const listarPorData = (data) => {
+        console.log(data)
+        axios({
+            method: 'POST', 
+            url: '/atividade/listar/data',
+            headers: headers,
+            data: {data}
+        
+            })
+            .then(function (response) {
+                setResponse(response)
+                
+            })
+            .catch(function (error){
+                setError(error)
+            })
+    }
+
+    const editar = (id) => {
+
+        axios({
+            method: 'GET',
+            url: `/atividade/editar/${id}`,
             headers: headers
         
             })
@@ -105,8 +141,12 @@ export default function useCategoriaAtividadeApi(){
         atualizar,
         excluir,
         obter,
+        listarPorData,
+        editar,
 
         error,  
         response
     }
-}
+
+
+} 

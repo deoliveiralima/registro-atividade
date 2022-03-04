@@ -8,6 +8,7 @@ import {Provider} from 'react-redux'
 import appReducer from './reducers/reducers';
 
 import axios from 'axios';
+import { BrowserRouter } from 'react-router-dom';
 let token ='token'
   sessionStorage.getItem('token') ? token = sessionStorage.getItem('token') : 
   
@@ -27,7 +28,9 @@ const store = createStore(appReducer)
 ReactDOM.render(
   <React.StrictMode>
     <Provider store ={store}> 
+    <BrowserRouter> 
       <App />
+    </BrowserRouter>
     </Provider>
     
   </React.StrictMode>,

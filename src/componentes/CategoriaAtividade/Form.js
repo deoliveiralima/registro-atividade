@@ -4,18 +4,23 @@ import { useNavigate } from "react-router-dom"
 import { definirAlert } from "../../actions/actions"
 import useCategoriaAtividadeApi from "../api/useCategoriaAtividadeApi"
 
-export default function FormCategoriaAtividade(){
-
+export default function FormCategoriaAtividade({categoria}){
+    console.log(categoria)
     const [alertClass, setAlertClass] = useState()
     const [alertTexto, setAlertTexto] = useState()
 
-    const [nome, setNome] = useState('')
+    const [nome, setNome] = useState(categoria ? categoria.nome: '')
+    const [id, setId] = useState(categoria ? categoria.id : '')
 
-    const {listar, salvar, error, response } = useCategoriaAtividadeApi()
+    const {listar, atualizar, salvar, error, response } = useCategoriaAtividadeApi()
 
     const dispatch = useDispatch()
     
     const navigate = useNavigate()
+
+    useEffect(()=>{
+        
+    },[])
 
 
 
@@ -25,9 +30,13 @@ export default function FormCategoriaAtividade(){
             dispatch(definirAlert({classe: "alert alert-success", texto: "Categoria de Atividade Salva"}))
             setNome('')
 
-            setTimeout(() => 
+            setTimeout(() => {
                 dispatch(definirAlert({classe: "", texto: ""}))
+                if(id)
+                    navigate('/categoria-atividade/lista')
 
+            }
+                
             ,1500);
 
         }
@@ -45,8 +54,8 @@ export default function FormCategoriaAtividade(){
 
     function categoriaAtividadeSubmit(e){
         e.preventDefault()
-
-        salvar({nome: nome})
+        id? atualizar({nome:nome}, id): salvar({nome: nome})  
+        
         
     }
 
